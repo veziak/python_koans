@@ -6,7 +6,7 @@ from runner.koan import *
 class AboutTuples(Koan):
     def test_creating_a_tuple(self):
         count_of_three =  (1, 2, 5)
-        self.assertEqual(__, count_of_three[2])
+        self.assertEqual(5, count_of_three[2])
 
     def test_tuples_are_immutable_so_item_assignment_is_not_possible(self):
         count_of_three =  (1, 2, 5)
@@ -14,15 +14,17 @@ class AboutTuples(Koan):
             count_of_three[2] = "three"
         except TypeError as ex:
             msg = ex.args[0]
+            print (ex)
 
         # Note, assertRegexpMatches() uses regular expression pattern matching,
         # so you don't have to copy the whole message.
 
-        self.assertRegexpMatches(msg, __)
+        self.assertRegexpMatches(msg, 'object does not support')
 
     def test_tuples_are_immutable_so_appending_is_not_possible(self):
         count_of_three =  (1, 2, 5)
-        with self.assertRaises(___): count_of_three.append("boom")
+
+        with self.assertRaises(AttributeError): count_of_three.append("boom")
 
         # Tuples are less flexible than lists, but faster.
 
@@ -33,15 +35,15 @@ class AboutTuples(Koan):
         list_count.append("boom")
         count_of_three = tuple(list_count)
 
-        self.assertEqual(__, count_of_three)
+        self.assertEqual((1, 2, 5, 'boom'), count_of_three)
 
     def test_tuples_of_one_look_peculiar(self):
-        self.assertEqual(__, (1).__class__)
-        self.assertEqual(__, (1,).__class__)
-        self.assertEqual(__, ("Hello comma!", ))
+        self.assertEqual(int, (1).__class__)
+        self.assertEqual(tuple, (1,).__class__)
+        self.assertEqual(("Hello comma!", ), ("Hello comma!", ))
 
     def test_tuple_constructor_can_be_surprising(self):
-        self.assertEqual(__, tuple("Surprise!"))
+        self.assertEqual(('S', 'u', 'r', 'p', 'r', 'i', 's', 'e', '!'), tuple("Surprise!"))
 
     def test_creating_empty_tuples(self):
         self.assertEqual(__ , ())
